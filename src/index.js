@@ -16,9 +16,15 @@ const button$_ = button$.subscribe(e => {
 })
 
 const $input = document.querySelector('input')
+const $result = document.querySelector('#result')
 
+// problem: 不满足 filter 的条件后，result的状态还是之前的
 const input$ = Rx.Observable.fromEvent($input, 'input')
   .map(e => e.target.value.trim())
-  .do(val => console.log(val))
+  .filter(val => val.length > 2)
+  .do(val => {
+    console.log(val)
+    $result.innerHTML = val.split('').reverse().join('')
+  })
 
 const input$_ = input$.subscribe()
